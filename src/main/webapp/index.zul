@@ -1,0 +1,75 @@
+<!--
+    This file is part of Snippr
+
+    Copyright (C) 2012 Igalia, S.L.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/common/layout/template.zul"?>
+
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window apply="org.snippr.web.controllers.SnippetCRUDController"
+        self="@{define(content)}">
+    <borderlayout height="600px">
+        <west title="Labels (${authentication.name})" size="15%" flex="true" maxsize="250" splittable="true"
+                collapsible="true" context="contextMenuLabels" >
+            <!-- Labels -->
+            <listbox id="listLabels" model="@{controller.labels}">
+                <listitem self="@{each='label'}" value="@{label}">
+                    <listcell label="@{label.name}" onClick="controller.filterByLabel(self.value)"/>
+                </listitem>
+            </listbox>
+        </west>
+
+        <center border="none">
+            <borderlayout>
+                <north height="15%" flex="true" context="contextMenuSnippets">
+
+                    <!-- List snippets -->
+                    <listbox id="listSnippets" 
+                        model="@{controller.snippets}"
+                        itemRenderer="@{controller.snippetRenderer}" >
+                        <listhead>
+                            <listheader label="Snippet" />
+                        </listhead>
+                    </listbox>
+
+            </north>
+                <south height="85%" flex="true">
+                    <vbox>
+                        <hbox>
+                            <button id="btnAddCode" label="add code" />
+                            <button id="btnAddComment" label="add comment" />
+                        </hbox>
+
+                        <!-- List code and comments -->
+                    </vbox>
+                </south>
+            </borderlayout>
+        </center>
+    </borderlayout>
+
+    <menupopup id="contextMenuSnippets">
+        <menuitem label="Add Snippet" onClick="controller.addSnippet()" />
+    </menupopup>
+
+    <menupopup id="contextMenuLabels">
+        <menuitem label="Add Label" onClick="controller.addLabel()" />
+    </menupopup>
+
+
+</window>

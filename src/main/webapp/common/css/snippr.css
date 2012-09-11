@@ -1,0 +1,13 @@
+.info {
+    padding: 3px;
+    color: black;
+    font-weight: bold;
+    background: #FFF1A8;
+}
+
+.error {
+    padding: 3px;
+    color: black;
+    font-weight: bold;
+    background: red;
+}

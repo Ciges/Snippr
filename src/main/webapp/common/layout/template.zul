@@ -1,0 +1,59 @@
+<!--
+    This file is part of Snippit
+
+    Copyright (C) 2012 Igalia, S.L.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+    <borderlayout>
+        <north>
+            <div>
+                <n:span style="font-size: 32px; font-family: Arial; font-weight: bold; ">Snippr</n:span>
+
+                <!-- Menu -->
+                <hbox style="margin-top: 10px; margin-bottom: 8px;">
+                    <hbox>
+                        <a href="/">Home</a> |
+                        <a href="/pages/search.zul">Search</a> |
+                        <a href="/pages/labels.zul">Labels</a> |
+                        <a href="/snippets/snippets.zul">Snippets</a>
+                    </hbox>
+
+                    <hbox pack="end">
+                       <label if="${sec:isAllGranted('ROLE_USER')}">${authentication.principal.username}</label>
+                        <a  href="/j_spring_security_logout" if="${sec:isAllGranted('ROLE_USER')}">Logout</a>
+                        <a  if="!${sec:isAllGranted('ROLE_USER')}" href="/pages/sign-in.zul" >Sign-in</a>
+                    </hbox>
+                </hbox>
+            </div>
+
+            <!--
+            <div>
+                <n:ul>
+                    <n:li><n:a href="" onClick="/">XXX</n:a></n:li>
+                </n:ul>
+            </div>
+            -->
+        </north>
+        <center self="@{insert(content)}" />
+        <south>
+            <n:p>Igalia @ Some Rights Reserved</n:p>
+        </south>
+    </borderlayout>
+</zk>
